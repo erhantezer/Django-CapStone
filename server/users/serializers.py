@@ -4,8 +4,6 @@ from django.contrib.auth.hashers import make_password
 
 
 
-
-
 class RegisterSerializers(serializers.ModelSerializer):
 
     email = serializers.EmailField(
@@ -46,3 +44,5 @@ class RegisterSerializers(serializers.ModelSerializer):
         if data["password"] != data["password1"]:
             raise serializers.ValidationError({"password":"Password fields didn't match"})
         return data
+    
+    
