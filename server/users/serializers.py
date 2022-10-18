@@ -1,6 +1,8 @@
 from rest_framework import serializers,validators
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
+from dj_rest_auth.serializers import TokenSerializer
+from rest_framework.authtoken.models import Token
 
 
 
@@ -46,4 +48,27 @@ class RegisterSerializers(serializers.ModelSerializer):
             raise serializers.ValidationError({"password":"Password fields didn't match"})
         return data
     
-    
+class UserSerializer(serializers.ModelSerializer):
+    full_name = serializers.SerializerMethodField()
+    class Meta:
+        model = User
+        fields = (
+            "id",
+            "username",
+            "email",
+            "first_name",
+            "last_name",
+            "full_name",
+            # "is_staff",# frontend kısmında butonların aktif olması için
+        )
+        
+    def get_full_name(self,obj):
+        return f"{obj.first_name.title()} {obj.last_name.upper()}"
+
+# custom token serializer yazmak
+class CustomTokenSerializer(TokenSerializer):
+    user = UserSerializer(read_only=True)
+
+    class Meta(TokenSerializer.Meta):
+        model = Token
+        fields = ("key", "user")    
