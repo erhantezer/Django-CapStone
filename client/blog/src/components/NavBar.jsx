@@ -8,13 +8,13 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import { useNavigate } from "react-router-dom";
-// import { AuthContext } from "../contexts/AuthContext";
+import { AuthContext } from "../contexts/AuthContext";
 
 export default function NavBar() {
-  // const {currentUser,logOut} = React.useContext(AuthContext);
+  const {currentUser} = React.useContext(AuthContext);
 
-    const currentUser ="Erhan"
     
+
   const navigate = useNavigate()
   // const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -25,11 +25,12 @@ export default function NavBar() {
   const handleClose = (e) => {
     setAnchorEl(null);
     if (e.target.innerText=== 'Login') {
-      navigate('/')
+      navigate('/login')
     }else if (e.target.innerText === 'Sign Up') {
       navigate('/register')
     }else if (e.target.innerText === 'Logout'){
       // logOut(navigate)
+      navigate("/login")
       
     }
 
@@ -40,8 +41,8 @@ export default function NavBar() {
      
       <AppBar position="static" style={{cursor:"pointer"}} sx={{backgroundColor:"tomato"}}>
         <Toolbar>
-            <Typography variant="h6" color="inherit" sx={{ flexGrow: 3,textAlign:"left"}} style={{marginLeft:"0px"}} onClick={()=>navigate("/home")} >
-              Clarusway's Personal List App
+            <Typography variant="h6" color="inherit" sx={{ flexGrow: 3,textAlign:"left"}} style={{marginLeft:"0px"}} onClick={()=>navigate("/")} >
+              Blog App
             </Typography>
             {currentUser ? (
             <Typography variant="h6" component="div" sx={{ flexGrow: 1,textAlign:"end",paddingRight:"1rem"}} > 
