@@ -25,7 +25,7 @@ const AuthContextProvider = (props) => {
 
 // ************************** REGISTER *********************
 
-const createUser = async(email, password, firstName, lastName, userName) => {
+const createUser = async(email, password, firstName, lastName, userName, navigate) => {
     const response = await axios.post(`${url}users/register/`, {
 
         "username":userName,
@@ -41,8 +41,8 @@ const createUser = async(email, password, firstName, lastName, userName) => {
         sessionStorage.setItem("username", response.data.username)
         setKey(response.data.token)
         sessionStorage.setItem("token", response.data.token)
-
         toastSuccessNotify("User registered success")
+        navigate("/")
     }
 }
 let values = {

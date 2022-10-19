@@ -10,7 +10,7 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {Formik,Form} from 'formik';
 import * as Yup from 'yup';
 import { AuthContext } from '../contexts/AuthContext';
@@ -19,7 +19,7 @@ import { AuthContext } from '../contexts/AuthContext';
 const theme = createTheme();
 
 export default function Register() {
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
   const {createUser} =React.useContext(AuthContext)
 
 
@@ -62,7 +62,8 @@ export default function Register() {
         onSubmit={(values,actions)=>{
           actions.resetForm()
           actions.setSubmitting(false)
-          createUser(values.email,values.password,values.firstName,values.lastName,values.userName)
+          createUser(values.email,values.password,values.firstName,values.lastName,values.userName,navigate)
+          
         }}
         >
           {({values,handleChange,errors,touched,handleBlur})=>(
