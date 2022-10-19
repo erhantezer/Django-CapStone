@@ -3,17 +3,13 @@ import { createContext, useState } from "react"
 import React from 'react'
 import { toastSuccessNotify } from "../helper/ToastNotify"
 
-//! Defining
 
+//! Defining
 export const AuthContext = createContext()
 
 
 
-
-
 //! Provider
-
-
 
 const AuthContextProvider = (props) => {
 
