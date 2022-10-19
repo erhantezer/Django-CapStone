@@ -45,10 +45,41 @@ const createUser = async(email, password, firstName, lastName, userName, navigat
         navigate("/")
     }
 }
+
+// ************************** LOGIN *********************
+
+const signIn = async(email,password, userName,navigate) => {
+
+    try {
+        const res = await axios.post(`${url}users/auth/login/`,{
+            "username":userName,
+            "email":email,
+            "password":password,
+        })
+        console.log(res)
+        
+        if(res.data.key){
+            setCurrentUser(res.data.user.username)
+            sessionStorage.setItem("username", res.data.user.username)
+            toastSuccessNotify("Login success")
+            navigate("/")
+        }
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const logout = async () => {
+    const res = 
+}
+
 let values = {
     createUser,
     currentUser,
     key,
+    signIn,
+    logout,
 }
 
   return (
