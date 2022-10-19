@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 # from rest_framework.decorators import api_view
 
-# Create your views here.
+
 class RegisterView(CreateAPIView):
     queryset = User.objects.all()
     serializer_class = RegisterSerializers
