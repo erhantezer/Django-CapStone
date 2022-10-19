@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 
 export default function NavBar() {
-  const {currentUser} = React.useContext(AuthContext);
+  const {currentUser,logout} = React.useContext(AuthContext);
 
     
 
@@ -29,7 +29,7 @@ export default function NavBar() {
     }else if (e.target.innerText === 'Sign Up') {
       navigate('/register')
     }else if (e.target.innerText === 'Logout'){
-      // logOut(navigate)
+      logout()
       navigate("/login")
       
     }

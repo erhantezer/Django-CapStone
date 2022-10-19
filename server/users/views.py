@@ -5,7 +5,7 @@ from rest_framework.generics import CreateAPIView
 from .serializers import RegisterSerializers
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
-from rest_framework.decorators import api_view
+# from rest_framework.decorators import api_view
 
 # Create your views here.
 class RegisterView(CreateAPIView):
@@ -26,8 +26,8 @@ class RegisterView(CreateAPIView):
         headers = self.get_success_headers(serializer.data)
         return Response(data, status=status.HTTP_201_CREATED, headers=headers)
     
-@api_view(['POST'])
-def logout(request):
-    request.user.auth_token.delete()
-    data = {'message': 'succesfully logout'}
-    return Response(data,status=status.HTTP_200_OK)
+# @api_view(['POST'])
+# def logout(request):
+#     request.user.auth_token.delete()
+#     data = {'message': 'succesfully logout'}
+#     return Response(data,status=status.HTTP_200_OK)

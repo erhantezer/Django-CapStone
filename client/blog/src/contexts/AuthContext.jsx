@@ -39,7 +39,7 @@ const createUser = async(email, password, firstName, lastName, userName, navigat
     if(response.data.token){
         setCurrentUser(response.data.username)
         sessionStorage.setItem("username", response.data.username)
-        setKey(response.data.token)
+        // setKey(response.data.token)
         sessionStorage.setItem("token", response.data.token)
         toastSuccessNotify("User registered success")
         navigate("/")
@@ -61,6 +61,9 @@ const signIn = async(email,password, userName,navigate) => {
         if(res.data.key){
             setCurrentUser(res.data.user.username)
             sessionStorage.setItem("username", res.data.user.username)
+            setKey(res.data.key)
+            const myKey = window.btoa(res.data.key)
+            sessionStorage.setItem("token", myKey)
             toastSuccessNotify("Login success")
             navigate("/")
         }
@@ -70,10 +73,23 @@ const signIn = async(email,password, userName,navigate) => {
     }
 }
 
-const logout = async () => {
-    const res = 
-}
-
+const logout =async(navigate) =>{
+    try{
+     
+     const res = await axios.post(`${url}users/auth/logout/`)
+     console.log(res)
+     if(res.status===200){
+      setCurrentUser(false)
+      setKey(false)
+      sessionStorage.clear()
+      toastSuccessNotify("User logout succesfully")
+      navigate("/login")
+     }
+    }
+    catch(err){
+      console.log(err)
+    }
+  }
 let values = {
     createUser,
     currentUser,
