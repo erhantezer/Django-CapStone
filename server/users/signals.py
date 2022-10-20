@@ -10,3 +10,4 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
         Token.objects.create(user=instance)
         
 
+# kaydedildiğinde bir token oluşturma işini yapan signal işlemi @receiver (decarator) göderici User dan token üretme methodunu yazdık 
