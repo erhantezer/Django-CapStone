@@ -1,3 +1,4 @@
+from unicodedata import category
 from rest_framework import serializers
 from .models import (
     Category,
@@ -17,13 +18,16 @@ class CategorySerializers(serializers.ModelSerializer):
             "name"
         )
 
-class BlogSerializers(serializers.ModelSerializer):
-    comment_post = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
-    like_post = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+class PostSerializers(serializers.ModelSerializer):
+    comment_post = CommentSerializers(many=True, read_only=True)
+    like_post = LikeSerializers(many=True, read_only=True)
+    view_user = PostSerializers(many=True, read_only=True)
     # category = serializers.StringRelatedField()
     # category_id = serializers.IntegerField()
     author = serializers.StringRelatedField()
     author_id = serializers.IntegerField()
+    category = serializers.StringRelatedField()
+    category_id = serializers.IntegerField()
     like_count = serializers.SerializerMethodField()
     comment_count = serializers.SerializerMethodField()
     post_view_count = serializers.SerializerMethodField()
@@ -40,9 +44,9 @@ class BlogSerializers(serializers.ModelSerializer):
             "content",
             "image",
             "published_date",
-            "last_updated_date",
+            "last_updated",
             "status",
-            "slug",
+            # "slug",
             "like_count",
             "comment_count",
             "post_view_count",
@@ -52,7 +56,7 @@ class BlogSerializers(serializers.ModelSerializer):
         read_only_fields = (
             "published_date",
             "updated_date",
-            "slug",
+            # "slug",
             "author",
             "author_id"
         )
@@ -92,6 +96,18 @@ class LikeSerializers(serializers.ModelSerializer):
             "post",
             # "like_user"
         )
+        
+class PostViewSerializers(serializers.ModelSerializer):
+    # like_user = AllUserSerializer(many=True, read_only=True)
+    user = serializers.StringRelatedField()
+    user_id = serializers.IntegerField()
+    post = serializers.StringRelatedField()
+    post_id = serializers.IntegerField()
+
+    class Meta:
+        model = PostView
+        fields = "__all__"
+          
 
 
 
