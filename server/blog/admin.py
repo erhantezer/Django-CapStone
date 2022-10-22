@@ -14,3 +14,5 @@ admin.site.register(BlogPost)
 admin.site.register(Comment)
 admin.site.register(Post_view)
 # Register your models here.
+
+#! Modelleri admin ile ulaşabilmek için admin girip istekte neleri görmek istediğimizi kaydederiz

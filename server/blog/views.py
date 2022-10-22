@@ -6,8 +6,13 @@ from .pagination import CustomLimitOffsetPagination
 from .permissions import IsAdminUserOrReadOnly, IsPostOwnerOrReadOnly
 from .serializers import BlogPostSerializer, CategorySerializer, CommentSerializer,LikeSerializer
 from rest_framework.response import Response
-from blog.models import BlogPost, Category, Post_view, Comment, Like
-
+from blog.models import (
+    BlogPost, 
+    Category, 
+    Post_view, 
+    Comment, 
+    Like
+)
 
 class CategoryView(generics.ListCreateAPIView):
     queryset = Category.objects.all()

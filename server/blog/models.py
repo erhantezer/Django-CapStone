@@ -1,12 +1,11 @@
-from django.db.models.signals import pre_save
-from django.dispatch import receiver
+
 from django.db import models
-from django.conf import settings
-from django.template.defaultfilters import slugify
-from .utils import get_random_code
+# from django.conf import settings
+from django.contrib.auth.models import User
 
 
-User = settings.AUTH_USER_MODEL
+
+# User = settings.AUTH_USER_MODEL
 
 
 class Category(models.Model):
