@@ -1,16 +1,16 @@
 from django.contrib import admin
-from .models import (
-    Category,
-    Post,
-    Comment,
-    Like,
-    PostView
+
+from blog.models import (
+    BlogPost, 
+    Category, 
+    Comment, 
+    Like, 
+    Post_view
 )
 
 admin.site.register(Category)
-admin.site.register(Post)
-admin.site.register(Comment)
 admin.site.register(Like)
-admin.site.register(PostView)
-
+admin.site.register(BlogPost)
+admin.site.register(Comment)
+admin.site.register(Post_view)
 # Register your models here.

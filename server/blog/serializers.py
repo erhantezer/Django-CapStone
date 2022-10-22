@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from blog.models import BlogPost, Category, Comment, Like, Post_view
-from .serializers import UserSerializer
+# from .serializers import UserSerializer
 from django.contrib.auth import get_user_model
 # User = settings.AUTH_USER_MODEL
 User = get_user_model()
