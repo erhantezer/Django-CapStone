@@ -1,75 +1,64 @@
-from .models import (
-    Category,
-    Post,
-    Comment,
-    Like,
-    PostView
-)
-from .serializers import (
-    CategorySerializers,
-    CommentSerializers,
-    LikeSerializers,
-    PostSerializers,
-)
-from rest_framework import generics, status
-from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.generics import get_object_or_404
+from rest_framework import permissions
 from rest_framework.exceptions import ValidationError
+from rest_framework.generics import get_object_or_404
+from rest_framework import  generics, status
+from .pagination import CustomLimitOffsetPagination
+from .permissions import IsAdminUserOrReadOnly, IsPostOwnerOrReadOnly
+from .serializers import BlogPostSerializer, CategorySerializer, CommentSerializer,LikeSerializer
+from rest_framework.response import Response
+from blog.models import BlogPost, Category, Post_view, Comment, Like
 
 
+class CategoryView(generics.ListCreateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    permission_classes = [IsAdminUserOrReadOnly]
 
-class CategoryViews(generics.ListCreateAPIView):
-    queryset=  Category.objects.all()
-    serializer_class= CategorySerializers
-    permission_classes = [IsAuthenticated]
 
-    #! Login olmuş kullanıcıyı ekliyorum.
-    def perform_create(self,serializer):
-        serializer.save(user=self.request.user)
-
-class PostView(generics.ListCreateAPIView):
-    queryset = Post.objects.all()
-    serializer_class = PostSerializers
-    permission_classes = [IsAuthenticated]
-    
+class BlogPostView(generics.ListCreateAPIView):
+    queryset = BlogPost.objects.all()
+    serializer_class = BlogPostSerializer
+    pagination_class = CustomLimitOffsetPagination
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
-        
-class PostDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Post.objects.all()
-    serializer_class = PostSerializers
-    permission_classes = [IsAuthenticated]
-    
+
+class BlogPostDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = BlogPost.objects.all()
+    serializer_class = BlogPostSerializer
+    lookup_field = "slug"
+    permission_classes = [IsPostOwnerOrReadOnly]
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
         # Post_view.objects.get_or_create(user=request.user, post=instance)
-        PostView.objects.create(user=request.user, post=instance)
+        Post_view.objects.create(user=request.user, post=instance)
         return Response(serializer.data)
+
 
 
 class CommentView(generics.CreateAPIView):
     queryset = Comment.objects.all()
-    serializer_class = CommentSerializers
-    permission_classes = [IsAuthenticated]
+    serializer_class = CommentSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def perform_create(self, serializer):
         print(self.kwargs)
         slug = self.kwargs.get('slug')
-        blog = get_object_or_404(Post, slug=slug)
+        blog = get_object_or_404(BlogPost, slug=slug)
         user = self.request.user
-        comments = Comment.objects.filter(blog=blog, user=user)
+        comments = Comment.objects.filter(post=blog, user=user)
         if comments.exists():
-             raise ValidationError("You can not add another comment, for this Post !")
-        serializer.save(blog=blog, user=user)
-        
+            raise ValidationError(
+                "You can not add another comment, for this Post !")
+        serializer.save(post=blog, user=user)
+
 
 class LikeView(generics.ListCreateAPIView):
     queryset = Like.objects.all()
-    serializer_class = LikeSerializers
+    serializer_class = LikeSerializer
 
     def create(self, request, *args, **kwargs):
         user = request.data.get('user')

@@ -1,88 +1,54 @@
-from unicodedata import category
 from rest_framework import serializers
-from .models import (
-    Category,
-    Post,
-    Comment,
-    Like,
-    PostView
-)
+from blog.models import BlogPost, Category, Comment, Like, Post_view
+from .serializers import UserSerializer
+from django.contrib.auth import get_user_model
+# User = settings.AUTH_USER_MODEL
+User = get_user_model()
+
+# class AllUserSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model  = User
+#         fields = (
+#             "username",
+#             "first_name",
+#             "last_name",
+#             "profile_pic",
+#             "biography"
+#         )
 
 
-
-class CategorySerializers(serializers.ModelSerializer):
-    class Meta:
-        model=Category
-        fields =(
-            "id",
-            "name"
-        )
-
-class PostSerializers(serializers.ModelSerializer):
-    comment_post = CommentSerializers(many=True, read_only=True)
-    like_post = LikeSerializers(many=True, read_only=True)
-    view_user = PostSerializers(many=True, read_only=True)
-    # category = serializers.StringRelatedField()
-    # category_id = serializers.IntegerField()
-    author = serializers.StringRelatedField()
-    author_id = serializers.IntegerField()
-    category = serializers.StringRelatedField()
-    category_id = serializers.IntegerField()
-    like_count = serializers.SerializerMethodField()
-    comment_count = serializers.SerializerMethodField()
-    post_view_count = serializers.SerializerMethodField()
+class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Post
+        model = Category
         fields = (
-            "id",
-            "title",
-            "author",
-            "author_id",
-            # "category_id",
-            "category",
-            "content",
-            "image",
-            "published_date",
-            "last_updated",
-            "status",
-            # "slug",
-            "like_count",
-            "comment_count",
-            "post_view_count",
-            "comment_post",
-            "like_post",
-        )
-        read_only_fields = (
-            "published_date",
-            "updated_date",
-            # "slug",
-            "author",
-            "author_id"
+            'id',
+            'name'
         )
 
-    def get_like_count(self, obj):
-        return Like.objects.filter(post=obj.id).count()
 
-    def get_comment_count(self, obj):
-        return Comment.objects.filter(post=obj.id).count()
+class CommentSerializer(serializers.ModelSerializer):
+    # user = serializers.StringRelatedField(read_only=True)
+    # user_id = serializers.IntegerField()
+    # post = serializers.StringRelatedField()
+    # post_id = serializers.IntegerField()
 
-    def get_post_view_count(self, obj):
-        return Post.objects.filter(post=obj.id).count()
+    # class Meta:
+    #     model = Comment
+    #     fields = "__all__"
 
-
-class CommentSerializers(serializers.ModelSerializer):
+# kimin yorum yaptığını belirtmek için ilave edildi
     user = serializers.StringRelatedField(read_only=True)
-    user_id = serializers.IntegerField()
-    post = serializers.StringRelatedField()
-    post_id = serializers.IntegerField()
-
     class Meta:
         model = Comment
-        fields = "__all__"
+        fields = (
+            "id",
+            "content",
+            "time_stamp",
+            "user",
+        )
 
-
-class LikeSerializers(serializers.ModelSerializer):
+class LikeSerializer(serializers.ModelSerializer):
     # like_user = AllUserSerializer(many=True, read_only=True)
     user = serializers.StringRelatedField()
     user_id = serializers.IntegerField()
@@ -96,22 +62,56 @@ class LikeSerializers(serializers.ModelSerializer):
             "post",
             # "like_user"
         )
-        
-class PostViewSerializers(serializers.ModelSerializer):
-    # like_user = AllUserSerializer(many=True, read_only=True)
-    user = serializers.StringRelatedField()
-    user_id = serializers.IntegerField()
-    post = serializers.StringRelatedField()
-    post_id = serializers.IntegerField()
+
+
+class BlogPostSerializer(serializers.ModelSerializer):
+    comment_post = CommentSerializer(many=True, read_only=True)
+    like_post = LikeSerializer(many=True, read_only=True)
+    # category = serializers.StringRelatedField()
+    # category_id = serializers.IntegerField()
+    author = serializers.StringRelatedField()
+    author_id = serializers.IntegerField()
+    like_count = serializers.SerializerMethodField()
+    comment_count = serializers.SerializerMethodField()
+    post_view_count = serializers.SerializerMethodField()
 
     class Meta:
-        model = PostView
-        fields = "__all__"
-          
+        model = BlogPost
+        fields = (
+            "id",
+            "title",
+            "author",
+            "author_id",
+            # "category_id",
+            "category",
+            "content",
+            "image",
+            "published_date",
+            "last_updated_date",
+            "status",
+            "slug",
+            "like_count",
+            "comment_count",
+            "post_view_count",
+            "comment_post",
+            "like_post",
+        )
+        read_only_fields = (
+            "published_date",
+            "updated_date",
+            "slug",
+            "author",
+            "author_id"
+        )
 
+    def get_like_count(self, obj):
+        return Like.objects.filter(post=obj.id).count()
 
+    def get_comment_count(self, obj):
+        return Comment.objects.filter(post=obj.id).count()
 
-
+    def get_post_view_count(self, obj):
+        return Post_view.objects.filter(post=obj.id).count()
 
 
 
