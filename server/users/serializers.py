@@ -22,8 +22,12 @@ class RegisterSerializers(serializers.ModelSerializer):
         write_only=True,
         style={"input_type":"password"},
     )
+#! yukarıda yazdığımız User içerisindeki register içindeki  email, password, pasword1 yada password2 de diyebilirdik özelleştirdik
+#! password ekledik ayrıca email = models.EmailField(_("email address"), blank=True) özelleştirdik
+
 
     class Meta:
+#! Burada User u inherit ederek içindeki fields kullanarak ve özelleştirdiğimiz verileri RegisterSerializer içine attık
         model =User
         fields= [
             "username",
@@ -33,10 +37,10 @@ class RegisterSerializers(serializers.ModelSerializer):
             "password",
             "password1"
         ]
+#!  dogrulanan veri (validated_data) meta da eklenmiş fields lerin içinde yani RegisterSerializer içindeki passwordu get ile çağırıp bir password değişkenine atıyoruz aynı zamanda validate data içindeki password1 i siliyoruz ki passwordu data da görmeyelim çünkü herkes görmüş olur data içinde kalırsa User object lerin içine vaalidate_data create edip gönderdik ve bunu user değişkenine attık user değişkeninin içindeki passwordu make_password fonksiyonu içindeki password deişkeni şeklinde oluşturmuş olduk
     def create(self,validated_data): 
         password = validated_data.get("password")
         validated_data.pop("password1")
-        
         user = User.objects.create(**validated_data)
         user.password = make_password(password)
         user.save()
