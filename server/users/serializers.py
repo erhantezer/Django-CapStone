@@ -37,6 +37,17 @@ class RegisterSerializers(serializers.ModelSerializer):
             "password",
             "password1"
         ]
+        
+  # Passwordu validate yani User dan inherit ettiğimiz  data içerisinden (fields) getirip password değişkeni içerisine atttık ve validate içerisinden password1 i pop ile sildik  kalan datayı create edip user değişkeni içerisine attık user değişkeni içerisindeki getirdiğimiz password değişkeni içerisindeki passwordu user içindeki passworda make_password(password) olarak yeni password değeri yaptık
+    def validate(self, data):
+        if data["password"] != data["password1"]:
+            raise serializers.ValidationError({"password":"Password fields didn't match"})
+        return data
+#! yukarıda  password ile pasword1 doğruluğunu karşılaştırdık       
+        
+              
+        
+        
 #!  dogrulanan veri (validated_data) meta da eklenmiş fields lerin içinde yani RegisterSerializer içindeki passwordu get ile çağırıp bir password değişkenine atıyoruz aynı zamanda validate data içindeki password1 i siliyoruz ki passwordu data da görmeyelim çünkü herkes görmüş olur data içinde kalırsa User object lerin içine vaalidate_data create edip gönderdik ve bunu user değişkenine attık user değişkeninin içindeki passwordu make_password fonksiyonu içindeki password deişkeni şeklinde oluşturmuş olduk
     def create(self,validated_data): 
         password = validated_data.get("password")
@@ -45,13 +56,10 @@ class RegisterSerializers(serializers.ModelSerializer):
         user.password = make_password(password)
         user.save()
         return user
-    # Passwordu validate yani User dan inherit ettiğimiz  data içerisinden (fields) getirip password değişkeni içerisine atttık ve validate içerisinden password1 i pop ile sildik  kalan datayı create edip user değişkeni içerisine attık user değişkeni içerisindeki getirdiğimiz password değişkeni içerisindeki passwordu user içindeki passworda make_password(password) olarak yeni password değeri yaptık
-
-    def validate(self, data):
-        if data["password"] != data["password1"]:
-            raise serializers.ValidationError({"password":"Password fields didn't match"})
-        return data
     
+  
+
+#!    
 class UserSerializer(serializers.ModelSerializer):
     full_name = serializers.SerializerMethodField()
     class Meta:
