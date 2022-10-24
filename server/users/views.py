@@ -8,6 +8,7 @@ from rest_framework.authtoken.models import Token
 # from rest_framework.decorators import api_view
 
 
+#! URL de oluşturulan endpointe göre buradaki fonksiyonu çalıştırarak dj_rest_auth otomatik çalıştırdık register özelleştirdiğimiz için registeri
 class RegisterView(CreateAPIView):
     queryset = User.objects.all()
     serializer_class = RegisterSerializers
