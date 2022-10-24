@@ -14,10 +14,12 @@ from blog.models import (
     Like
 )
 
+
 class CategoryView(generics.ListCreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = [IsAdminUserOrReadOnly]
+
 
 
 class BlogPostView(generics.ListCreateAPIView):
@@ -28,6 +30,7 @@ class BlogPostView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
+
 
 class BlogPostDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = BlogPost.objects.all()

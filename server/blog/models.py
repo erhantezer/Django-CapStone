@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 
 # User = settings.AUTH_USER_MODEL
 
-
+#!
 class Category(models.Model):
     name = models.CharField(max_length=50)
 
