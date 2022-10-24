@@ -48,7 +48,7 @@ class RegisterSerializers(serializers.ModelSerializer):
               
         
         
-#!  dogrulanan veri (validated_data) meta da eklenmiş fields lerin içinde yani RegisterSerializer içindeki passwordu get ile çağırıp bir password değişkenine atıyoruz aynı zamanda validate data içindeki password1 i siliyoruz ki passwordu data da görmeyelim çünkü herkes görmüş olur data içinde kalırsa User object lerin içine vaalidate_data create edip gönderdik ve bunu user değişkenine attık user değişkeninin içindeki passwordu make_password fonksiyonu içindeki password deişkeni şeklinde oluşturmuş olduk
+#!  dogrulanan veri (validated_data) meta da eklenmiş fields lerin içinde yani RegisterSerializer içindeki passwordu get ile çağırıp bir password değişkenine atıyoruz aynı zamanda validate data içindeki password1 i siliyoruz ki passwordu data da görmeyelim çünkü herkes görmüş olur data içinde kalırsa User object lerin içine vaalidate_data create edip gönderdik ve bunu user değişkenine attık user değişkeninin içindeki passwordu make_password fonksiyonu içindeki password değişkeni şeklinde oluşturmuş olduk
     def create(self,validated_data): 
         password = validated_data.get("password")
         validated_data.pop("password1")
@@ -59,7 +59,9 @@ class RegisterSerializers(serializers.ModelSerializer):
     
   
 
-#!    
+#! kendimize göre yeni bir User dan inherit ederek field lerini kullanarak ve fullname ekleyerek bir methodfield yazarak serializer yazdık  
+#? AMACIMIZ KULLANICI BİLGİLERİNİN TAMAMINI GÖRMEK VE BUNLARI KULLANABİLMEK 
+#############! BU KISIMDAN İTİBAREN LOGİN İŞLEMLERİ İÇİN VERİLERİ GÖRMEK İÇİN YAZDIK ###############
 class UserSerializer(serializers.ModelSerializer):
     full_name = serializers.SerializerMethodField()
     class Meta:
@@ -78,6 +80,7 @@ class UserSerializer(serializers.ModelSerializer):
         return f"{obj.first_name.title()} {obj.last_name.upper()}"
 
 # custom token serializer yazmak
+#!KEY YANİ TOKEN ARDINDAN DA USERSERİALİZER İÇİNDEKİ VERİLER user İÇİNDE OLUŞTURULDU "http://127.0.0.1:8000/users/auth/login/" BURADAN BAKINIZ
 class CustomTokenSerializer(TokenSerializer):
     user = UserSerializer(read_only=True)
 
