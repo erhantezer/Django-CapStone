@@ -32,7 +32,7 @@ class BlogPost(models.Model):
     slug = models.SlugField(blank=True, null=True)
 
     def __str__(self):
-        return self.title
+        return self.title  #! obje diye değil title ismiyle görüntüleyelim adminde
 
 
 class Like(models.Model):
