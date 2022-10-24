@@ -7,14 +7,14 @@ from django.contrib.auth.models import User
 
 # User = settings.AUTH_USER_MODEL
 
-#!
+#! Database de Category adında bir tablo oluşturduk sadece id ve name stunu oluşturmuş olduk içindeki verileri görebilmek için __str__ methodunu oluşturduk
 class Category(models.Model):
     name = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
 
-
+#! Db de BlogPost adında bir tablo oluşturduk one to many ile bir category ile birçok post oluşturabilmemiz için foreignkey kullandık ayrıca bir user a ait birden çok post olabilir diye aynı işlemleri yaptık User dan inherit edip kullandık "BİR POSTUN SIRASIYLA BAŞLIĞINI, YAZARINI,KATEGORİSİNİ, İÇERİĞİNİ(CONTENT), RESMİNİ, YAYINLANMA TARİHİNİ, SON GÜNCELLEME TARİHİNİ, KONUMUNUN TASLAK(DRAFT) MI YAYINLANMIŞ(PUPLISHED) MI OLDUĞUNU, İSTEDİĞİMİZ - Lİ VE RANDOM SAYI ÜRETİP ENDPOİNTE EKLEME YAPILACAK KISIM ENDPOİNT OLUŞTURMA(SLUG)  "
 class BlogPost(models.Model):
     STATUS = (
         ("d", "DRAFT"),
