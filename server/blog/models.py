@@ -36,10 +36,8 @@ class BlogPost(models.Model):
 
 
 class Like(models.Model):
-    user = models.ForeignKey(
-        User, related_name="like_user", on_delete=models.PROTECT)
-    post = models.ForeignKey(
-        BlogPost, related_name="like_post", on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name="like_user", on_delete=models.PROTECT)
+    post = models.ForeignKey(BlogPost, related_name="like_post", on_delete=models.CASCADE)
 
     def __str__(self):
         return self.user

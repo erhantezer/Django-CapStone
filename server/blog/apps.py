@@ -7,3 +7,4 @@ class BlogConfig(AppConfig):
     
     def ready(self):
         import blog.signals
+        #! signals kullandığımızda signalın hazır olduğu methodu BlogConfig clasında oluştururuz ve import olarak blog uygulamasındaki signals diye belirtiriz
