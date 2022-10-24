@@ -44,9 +44,7 @@ class RegisterSerializers(serializers.ModelSerializer):
             raise serializers.ValidationError({"password":"Password fields didn't match"})
         return data
 #! yukarıda  password ile pasword1 doğruluğunu karşılaştırdık       
-        
               
-        
         
 #!  dogrulanan veri (validated_data) meta da eklenmiş fields lerin içinde yani RegisterSerializer içindeki passwordu get ile çağırıp bir password değişkenine atıyoruz aynı zamanda validate data içindeki password1 i siliyoruz ki passwordu data da görmeyelim çünkü herkes görmüş olur data içinde kalırsa User object lerin içine vaalidate_data create edip gönderdik ve bunu user değişkenine attık user değişkeninin içindeki passwordu make_password fonksiyonu içindeki password değişkeni şeklinde oluşturmuş olduk
     def create(self,validated_data): 
@@ -58,6 +56,7 @@ class RegisterSerializers(serializers.ModelSerializer):
         return user
     
   
+
 
 #! kendimize göre yeni bir User dan inherit ederek field lerini kullanarak ve fullname ekleyerek bir methodfield yazarak serializer yazdık  
 #? AMACIMIZ KULLANICI BİLGİLERİNİN TAMAMINI GÖRMEK VE BUNLARI KULLANABİLMEK 
