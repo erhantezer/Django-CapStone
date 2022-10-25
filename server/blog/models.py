@@ -34,7 +34,7 @@ class BlogPost(models.Model):
     def __str__(self):
         return self.title  #! obje diye değil title ismiyle görüntüleyelim adminde
 
-
+#! Like işlemi aynı postta olmadan bir user birden fazla like işlemi yapabilir aynı zamanda bir bir postta birden çok like olabilir
 class Like(models.Model):
     user = models.ForeignKey(User, related_name="like_user", on_delete=models.PROTECT)
     post = models.ForeignKey(BlogPost, related_name="like_post", on_delete=models.CASCADE)
@@ -42,7 +42,7 @@ class Like(models.Model):
     def __str__(self):
         return self.user
 
-
+#! Comment işlemi aynı postta olmadan bir user birden fazla Comment işlemi yapabilir aynı zamanda bir bir postta birden çok Comment olabilir. Yorum yapıldığındaki zamanı time_stamp ile belirtiyoruz content ile yorum hanesi açmış olduk
 class Comment(models.Model):
     content = models.TextField()
     time_stamp = models.DateTimeField(auto_now_add=True, blank=True)
@@ -52,7 +52,7 @@ class Comment(models.Model):
     def __str__(self):
         return self.user
 
-
+#! yukardaki işlemlerin aynısı yapılır aynı zamanda görüldü zamanını ekledik PROTECT ile USER silindiğinde post_view silinmesin demektir. CASCADE ile BlogPost silindiğinde Post_view de sil demektir
 class Post_view(models.Model):
     user = models.ForeignKey(User, related_name="post_viewed_user", on_delete=models.PROTECT)
     post = models.ForeignKey(BlogPost, related_name="viewed_post", on_delete=models.CASCADE)
