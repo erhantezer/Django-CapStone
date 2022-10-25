@@ -1,20 +1,8 @@
 from rest_framework import serializers
 from blog.models import BlogPost, Category, Comment, Like, Post_view
-# from .serializers import UserSerializer
 from django.contrib.auth import get_user_model
-# User = settings.AUTH_USER_MODEL
 User = get_user_model()
 
-# class AllUserSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model  = User
-#         fields = (
-#             "username",
-#             "first_name",
-#             "last_name",
-#             "profile_pic",
-#             "biography"
-#         )
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -28,16 +16,6 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    # user = serializers.StringRelatedField(read_only=True)
-    # user_id = serializers.IntegerField()
-    # post = serializers.StringRelatedField()
-    # post_id = serializers.IntegerField()
-
-    # class Meta:
-    #     model = Comment
-    #     fields = "__all__"
-
-# kimin yorum yaptığını belirtmek için ilave edildi
     user = serializers.StringRelatedField(read_only=True)
     class Meta:
         model = Comment
@@ -49,7 +27,6 @@ class CommentSerializer(serializers.ModelSerializer):
         )
 
 class LikeSerializer(serializers.ModelSerializer):
-    # like_user = AllUserSerializer(many=True, read_only=True)
     user = serializers.StringRelatedField()
     user_id = serializers.IntegerField()
 
