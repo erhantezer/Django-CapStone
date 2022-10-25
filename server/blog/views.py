@@ -14,7 +14,10 @@ from blog.models import (
     Like
 )
 
-
+#! model (db) deki bütün verileri queryset olarak al serializers te oluşturduğumuz db oluşturulan tablonun json veri tipindeki verileri serializer_class olarak al. bunları hem listele hemde oluşturma işlemi generics.ListCreateAPIView ile yap
+# ListCreateAPIView(mixins.ListModelMixin,
+                        # mixins.CreateModelMixin,
+                        # GenericAPIView):
 class CategoryView(generics.ListCreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
