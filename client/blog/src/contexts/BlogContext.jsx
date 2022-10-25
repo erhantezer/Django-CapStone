@@ -7,7 +7,7 @@ export const BlogContext = createContext();
 const BlogContextProvider = (props) => {
   const [detailLoading, setDetailLoading] = useState(true)
 
-  const [blogDetail, setBlogDetail] = useState([]);
+  // const [blogDetail, setBlogDetail] = useState([]);
 
   const [blogs, setBlogs] = useState([]);
 
@@ -25,34 +25,34 @@ const BlogContextProvider = (props) => {
       toastErrorNotify(error.message)
     }
   }
-  async function getOneBlog(slug) {
-    const token = window.atob(sessionStorage.getItem('token'));
+  // async function getOneBlog(slug) {
+  //   const token = window.atob(sessionStorage.getItem('token'));
 
-    try {
-      var config = {
-        method: 'get',
-        url: `${base_url}api/posts/${slug}`,
-        headers: {
-          'Authorization': `Token ${token}`,
-        }
-      };
-      const result = await axios(config);
-      console.log(result)
-      setDetailLoading(false);
-      console.log(result.data);
-      setBlogDetail(result.data);
-    } catch (error) {
-      toastErrorNotify(error.message)
-    }
-  }
+  //   try {
+  //     var config = {
+  //       method: 'get',
+  //       url: `${base_url}api/posts/${slug}`,
+  //       headers: {
+  //         'Authorization': `Token ${token}`,
+  //       }
+  //     };
+  //     const result = await axios(config);
+  //     console.log(result)
+  //     setDetailLoading(false);
+  //     console.log(result.data);
+  //     setBlogDetail(result.data);
+  //   } catch (error) {
+  //     toastErrorNotify(error.message)
+  //   }
+  // }
 
   let value = {
     blogs,
     setBlogs,
     getBlogs,
-    getOneBlog,
-    blogDetail,
-    detailLoading
+    setDetailLoading,
+    
+    detailLoading,
   }
 
   return (
