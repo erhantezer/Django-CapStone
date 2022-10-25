@@ -14,7 +14,7 @@ const AppRouter = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/details/:str" element={<PostDetails />} />
+        <Route path="/details/:slug" element={<PostDetails />} />
       </Routes>
     </BrowserRouter>
   );

@@ -37,6 +37,7 @@ const BlogContextProvider = (props) => {
         }
       };
       const result = await axios(config);
+      console.log(result)
       setDetailLoading(false);
       console.log(result.data);
       setBlogDetail(result.data);

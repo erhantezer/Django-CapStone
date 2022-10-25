@@ -21,6 +21,7 @@ const Home = () => {
   const { currentUser } = useContext(AuthContext)
   console.log(currentUser);
 
+
   const { getBlogs, blogs } = useContext(BlogContext)
 
   useEffect(() => {
@@ -33,7 +34,7 @@ const Home = () => {
     if (!currentUser) {
       toastErrorNotify("Login for details of blog!");
     } else {
-      navigate(`/details/${slug}`, {state: { slug }})
+      navigate(`/details/${slug}`)
     }
   }
   return (

@@ -21,15 +21,16 @@ import { AuthContext } from '../contexts/AuthContext';
 
 const PostDetails = () => {
 
-  const { getOneBlog, blogDetail, detailLoading } = useContext(BlogContext)
+  const { getOneBlog, blogDetail,blogs } = useContext(BlogContext)
   const { currentUser } = useContext(AuthContext)
   const { state } = useLocation()
+  console.log(state)
   console.log(blogDetail)
   console.log(currentUser)
 
   useEffect(() => {
     getOneBlog(state.slug)
-  }, [])
+  },[])
 
   const base_url = "http://127.0.0.1:8000/"
 
@@ -54,7 +55,7 @@ console.log("Like isteği yapıldı.");
   const handleFavorite = () => {
     like()
   }
-
+const detailLoading=true
   return (
     <div>
       {detailLoading ? (
