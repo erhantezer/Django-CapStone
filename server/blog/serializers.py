@@ -4,9 +4,8 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 
-
+#! Category model (tablo) içindeki id ve name Json yapısına çevirir queryset olarak döner key value şeklinde verileri json formatında görmüş oluruz
 class CategorySerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Category
         fields = (
@@ -14,7 +13,7 @@ class CategorySerializer(serializers.ModelSerializer):
             'name'
         )
 
-
+#! Bu serializerde farklı olarak foreignkey(OneToMany) şeklinde aldığımız user ı id değilde string şeklinde göstermek için stringRealatedfield olarak aldık
 class CommentSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField(read_only=True)
     class Meta:
