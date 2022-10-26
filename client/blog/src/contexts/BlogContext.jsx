@@ -1,6 +1,6 @@
 import axios from "axios";
 import { createContext, useState } from "react";
-import { toastErrorNotify} from "../helper/ToastNotify";
+import { toastErrorNotify, toastSuccessNotify} from "../helper/ToastNotify";
 
 export const BlogContext = createContext();
 
@@ -19,7 +19,7 @@ const BlogContextProvider = (props) => {
     try {
       const res = await axios.get(blogUrl)
       setBlogs(res.data.results)
-      // toastSuccessNotify('Posts fetched successfully.')
+      toastSuccessNotify('Posts fetched successfully.')
       return res;
     } catch (error) {
       toastErrorNotify(error.message)
