@@ -43,8 +43,6 @@ class LikeSerializer(serializers.ModelSerializer):
 class BlogPostSerializer(serializers.ModelSerializer):
     comment_post = CommentSerializer(many=True, read_only=True)
     like_post = LikeSerializer(many=True, read_only=True)
-    # category = serializers.StringRelatedField()
-    # category_id = serializers.IntegerField()
     author = serializers.StringRelatedField()
     author_id = serializers.IntegerField()
     like_count = serializers.SerializerMethodField()
