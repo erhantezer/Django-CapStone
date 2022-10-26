@@ -52,6 +52,7 @@ class BlogPostSerializer(serializers.ModelSerializer):
     comment_count = serializers.SerializerMethodField()
     post_view_count = serializers.SerializerMethodField()
     category = serializers.StringRelatedField()
+    category_id = serializers.IntegerField()
     
     class Meta:
         model = BlogPost
@@ -73,6 +74,7 @@ class BlogPostSerializer(serializers.ModelSerializer):
             "post_view_count",
             "comment_post",
             "like_post",
+            "category_id",
         )
         read_only_fields = (
             "published_date",
