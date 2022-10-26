@@ -51,7 +51,8 @@ class BlogPostSerializer(serializers.ModelSerializer):
     days = serializers.SerializerMethodField()
     comment_count = serializers.SerializerMethodField()
     post_view_count = serializers.SerializerMethodField()
-
+    category = serializers.StringRelatedField()
+    
     class Meta:
         model = BlogPost
         fields = (
