@@ -22,8 +22,9 @@ const Home = () => {
   console.log(currentUser);
 
 
-  const { getBlogs, blogs } = useContext(BlogContext)
+const { getBlogs, blogs } = useContext(BlogContext)
 console.log(blogs);
+
   useEffect(() => {
     getBlogs();
 
