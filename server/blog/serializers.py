@@ -1,7 +1,9 @@
 from rest_framework import serializers
 from blog.models import BlogPost, Category, Comment, Like, Post_view
 from django.contrib.auth import get_user_model
+from django.utils.timezone import now
 User = get_user_model()
+
 
 
 #! Category model (tablo) içindeki id ve name Json yapısına çevirir queryset olarak döner key value şeklinde verileri json formatında görmüş oluruz
@@ -46,6 +48,7 @@ class BlogPostSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField()
     author_id = serializers.IntegerField()
     like_count = serializers.SerializerMethodField()
+    days = serializers.SerializerMethodField()
     comment_count = serializers.SerializerMethodField()
     post_view_count = serializers.SerializerMethodField()
 
@@ -56,12 +59,12 @@ class BlogPostSerializer(serializers.ModelSerializer):
             "title",
             "author",
             "author_id",
-            # "category_id",
             "category",
             "content",
             "image",
             "published_date",
             "last_updated_date",
+            "days",
             "status",
             "slug",
             "like_count",
@@ -73,6 +76,7 @@ class BlogPostSerializer(serializers.ModelSerializer):
         read_only_fields = (
             "published_date",
             "updated_date",
+            "days",
             "slug",
             "author",
             "author_id"
@@ -87,6 +91,8 @@ class BlogPostSerializer(serializers.ModelSerializer):
     def get_post_view_count(self, obj):
         return Post_view.objects.filter(post=obj.id).count()
 
+    def get_days(self,obj):
+        return (now() - obj.publishdate).days
 
 
 
