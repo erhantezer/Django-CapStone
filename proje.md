@@ -707,7 +707,7 @@ class BlogPost(models.Model):
     content = models.TextField()
     # image = models.ImageField(upload_to=None, height_field=None, width_field=None, max_length=None)
     image = models.URLField(max_length=200, blank=True,
-                            default="https://gravatar.com/avatar/2074b7945e3c6c493b0b2b94b24c35c2?s=400&d=robohash&r=x")
+                            default="https://picsum.photos/500/300?random=1")
     published_date = models.DateTimeField(auto_now_add=True, blank=True)
     last_updated_date = models.DateTimeField(auto_now=True, blank=True)
     status = models.CharField(max_length=2, choices=STATUS)
