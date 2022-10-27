@@ -7,14 +7,19 @@ from django.contrib.auth.models import User
 
 # User = settings.AUTH_USER_MODEL
 
-#! Database de Category adında bir tablo oluşturduk sadece id ve name stunu oluşturmuş olduk içindeki verileri görebilmek için __str__ methodunu oluşturduk
+#! Database de Category adında bir tablo oluşturduk sadece id ve name stunu oluşturmuş olduk içindeki verileri görebilmek için
+#! __str__ methodunu oluşturduk
 class Category(models.Model):
     name = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
 
-#! Db de BlogPost adında bir tablo oluşturduk one to many ile bir category ile birçok post oluşturabilmemiz için foreignkey kullandık ayrıca bir user a ait birden çok post olabilir diye aynı işlemleri yaptık User dan inherit edip kullandık "BİR POSTUN SIRASIYLA BAŞLIĞINI, YAZARINI,KATEGORİSİNİ, İÇERİĞİNİ(CONTENT), RESMİNİ, YAYINLANMA TARİHİNİ, SON GÜNCELLEME TARİHİNİ, KONUMUNUN TASLAK(DRAFT) MI YAYINLANMIŞ(PUPLISHED) MI OLDUĞUNU, İSTEDİĞİMİZ - Lİ VE RANDOM SAYI ÜRETİP ENDPOİNTE EKLEME YAPILACAK KISIM ENDPOİNT OLUŞTURMA(SLUG)  "
+#! Db de BlogPost adında bir tablo oluşturduk one to many ile bir category ile birçok post oluşturabilmemiz için foreignkey kullandık
+#! ayrıca bir user a ait birden çok post olabilir diye aynı işlemleri yaptık User dan inherit edip kullandık 
+#! "BİR POSTUN SIRASIYLA BAŞLIĞINI, YAZARINI,KATEGORİSİNİ, İÇERİĞİNİ(CONTENT), RESMİNİ, YAYINLANMA TARİHİNİ, SON GÜNCELLEME TARİHİNİ, 
+#! KONUMUNUN TASLAK(DRAFT) MI YAYINLANMIŞ(PUPLISHED) MI OLDUĞUNU, İSTEDİĞİMİZ - Lİ VE RANDOM SAYI ÜRETİP ENDPOİNTE EKLEME YAPILACAK KISIM 
+#! ENDPOİNT OLUŞTURMA(SLUG)  "
 class BlogPost(models.Model):
     STATUS = (
         ("d", "DRAFT"),
@@ -42,7 +47,8 @@ class Like(models.Model):
     def __str__(self):
         return self.user
 
-#! Comment işlemi aynı postta olmadan bir user birden fazla Comment işlemi yapabilir aynı zamanda bir bir postta birden çok Comment olabilir. Yorum yapıldığındaki zamanı time_stamp ile belirtiyoruz content ile yorum hanesi açmış olduk
+#! Comment işlemi aynı postta olmadan bir user birden fazla Comment işlemi yapabilir aynı zamanda bir bir postta birden çok Comment olabilir.
+#! Yorum yapıldığındaki zamanı time_stamp ile belirtiyoruz content ile yorum hanesi açmış olduk
 class Comment(models.Model):
     content = models.TextField()
     time_stamp = models.DateTimeField(auto_now_add=True, blank=True)
@@ -52,7 +58,8 @@ class Comment(models.Model):
     def __str__(self):
         return self.user
 
-#! yukardaki işlemlerin aynısı yapılır aynı zamanda görüldü zamanını ekledik PROTECT ile USER silindiğinde post_view silinmesin demektir. CASCADE ile BlogPost silindiğinde Post_view de sil demektir
+#! yukardaki işlemlerin aynısı yapılır aynı zamanda görüldü zamanını ekledik PROTECT ile USER silindiğinde post_view silinmesin demektir.
+#! CASCADE ile BlogPost silindiğinde Post_view de sil demektir
 class Post_view(models.Model):
     user = models.ForeignKey(User, related_name="post_viewed_user", on_delete=models.PROTECT)
     post = models.ForeignKey(BlogPost, related_name="viewed_post", on_delete=models.CASCADE)
