@@ -12,14 +12,14 @@ from rest_framework.pagination import CursorPagination, LimitOffsetPagination
 #     page_size_query_description = _('Number of results to return per page.')
 #     max_page_size = None  
 #     offset_cutoff = 1000
-
-
 class CursorSetPagination(CursorPagination):
     page_size = 6
     page_size_query_param = 'page_size'
-    ordering = 'id'  # '-created' is defaultz
+    ordering = 'id'  # '-created' is default
     
     
+class CustomLimitOffsetPagination(LimitOffsetPagination):
+    default_limit = 6    
 # class LimitOffsetPagination(BasePagination):
 #     default_limit = api_settings.PAGE_SIZE
 #     limit_query_param = 'limit'
@@ -30,5 +30,3 @@ class CursorSetPagination(CursorPagination):
 #     template = 'rest_framework/pagination/numbers.html'
 
 
-class CustomLimitOffsetPagination(LimitOffsetPagination):
-    default_limit = 6
