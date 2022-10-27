@@ -15,7 +15,8 @@ class CategorySerializer(serializers.ModelSerializer):
             'name'
         )
 
-#! Bu serializerde farklı olarak foreignkey(OneToMany) şeklinde aldığımız user ı id değilde string şeklinde göstermek için stringRealatedfield olarak aldık
+#! Bu serializerde farklı olarak foreignkey(OneToMany) şeklinde aldığımız user ı id değilde string şeklinde göstermek için 
+#! stringRealatedfield olarak aldık
 class CommentSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField(read_only=True)
     class Meta:
@@ -26,7 +27,8 @@ class CommentSerializer(serializers.ModelSerializer):
             "time_stamp",
             "user",
         )
-#! Bu serializerde foreignkey(OneToMany) şeklinde aldığımız user ı id değilde string şeklinde göstermek için stringRealatedfield olarak aldık db içindeki Like tablosu içinde id, user, user_id, post u aldık 
+#! Bu serializerde foreignkey(OneToMany) şeklinde aldığımız user ı id değilde string şeklinde göstermek için stringRealatedfield olarak aldık
+#! db içindeki Like tablosu içinde id, user, user_id, post u aldık 
 class LikeSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField(read_only=True)
     user_id = serializers.IntegerField()
@@ -41,7 +43,11 @@ class LikeSerializer(serializers.ModelSerializer):
             
         )
 
-#!
+#! BlogPost serializer da comment ve like işlemleri için model de tanımladığımız isimde değişkeni yazıp üstte tanımladığımız commentserializer
+#! ve like serializeri ekledik ardından foreign key ile bağlı olan verilerin string olarak almak için category ve author stringrelatedfield yazarız
+#!  ardından bunların author_id ve category_id lerini eklemek gerekir. 
+#! Tanımladığımız methodfieldleri like_count,days,comment_count,post_view_count ekleriz BlogPost modelinde yazdığımız ve serializerde yazdığımız
+#! bütün fields ekleriz
 class BlogPostSerializer(serializers.ModelSerializer):
     comment_post = CommentSerializer(many=True, read_only=True)
     like_post = LikeSerializer(many=True, read_only=True)
@@ -76,6 +82,7 @@ class BlogPostSerializer(serializers.ModelSerializer):
             "like_post",
             "category_id",
         )
+#! read_only_fields sadece okunacak kullanıcı değişikliğe uğramadan gelen neyse onu okumak ve yansıtmak için kullanılır
         read_only_fields = (
             "published_date",
             "updated_date",
@@ -98,10 +105,6 @@ class BlogPostSerializer(serializers.ModelSerializer):
         return (now() - obj.publishdate).days
 
 
-
-
-
-
 # ! Object-level validation  
 
 #   """
@@ -113,7 +116,7 @@ class BlogPostSerializer(serializers.ModelSerializer):
 #     if value.lower() =="angular" and  value.lower() =="vue" :
 #         raise serializers.ValidationError("angular and value can not be our blogapp")
 
-#! Category içerisindeki tüm postlara ulaşmak için related name =categorys için categorys=PostSerializers(many=True) # tüm postları getirebiliriz
+#? Category içerisindeki tüm postlara ulaşmak için related name =categorys için categorys=PostSerializers(many=True) # tüm postları getirebiliriz
 
 #! timezone
 # Postun yayınlanma süresini from django.utils.timezone import  ederek days=serializers.SerializerMethodField() kullanarak
