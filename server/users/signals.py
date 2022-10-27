@@ -9,4 +9,4 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
         
-#! kaydedildiğinde bir token oluşturma işini yapan signal işlemi @receiver (decarator) gönderici User dan token üretme methodunu yazdık 
+#! Kaydedildiğinde bir token oluşturma işini yapan signal işlemi @receiver (decarator) gönderici User dan token üretme methodunu yazdık 
