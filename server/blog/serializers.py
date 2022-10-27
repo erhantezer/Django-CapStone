@@ -5,7 +5,7 @@ from django.utils.timezone import now
 User = get_user_model()
 
 
-
+###########? CATEGORY COMMENT VE LİKE YUKARDA TANIMLAMAMIZIN NEDENİ AŞAĞIDAKİ POST TA KULLANMAKTIR YUKARDA TANIMLAMAZSAK HATA ALIRIZ ########
 #! Category model (tablo) içindeki id ve name Json yapısına çevirir queryset olarak döner key value şeklinde verileri json formatında görmüş oluruz
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -26,9 +26,9 @@ class CommentSerializer(serializers.ModelSerializer):
             "time_stamp",
             "user",
         )
-
+#! Bu serializerde foreignkey(OneToMany) şeklinde aldığımız user ı id değilde string şeklinde göstermek için stringRealatedfield olarak aldık db içindeki Like tablosu içinde id, user, user_id, post u aldık 
 class LikeSerializer(serializers.ModelSerializer):
-    user = serializers.StringRelatedField()
+    user = serializers.StringRelatedField(read_only=True)
     user_id = serializers.IntegerField()
 
     class Meta:
@@ -38,10 +38,10 @@ class LikeSerializer(serializers.ModelSerializer):
             "user",
             "user_id",
             "post",
-            # "like_user"
+            
         )
 
-
+#!
 class BlogPostSerializer(serializers.ModelSerializer):
     comment_post = CommentSerializer(many=True, read_only=True)
     like_post = LikeSerializer(many=True, read_only=True)
