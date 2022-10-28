@@ -23,46 +23,34 @@ import { Card, Grid } from '@mui/material';
 
 const PostDetails = () => {
   const { slug } = useParams();
+  console.log(slug);
   const { blogDetail,blogs } = useContext(BlogContext)
   const { currentUser } = useContext(AuthContext)
   const [details, setDetails] = useState([])
-  const [loading, setLoading] = useState(false)
-  const { state } = useLocation()
-  console.log(state)
-  console.log(blogDetail)
-  console.log(currentUser)
+  const [loading, setLoading] = useState(true)
+ 
+ 
 
   const base_url = "http://127.0.0.1:8000/"
-  async function getOneBlog() {
-    const token = window.atob(sessionStorage.getItem('token'));
-    setLoading(true)
+  const getPostDetails = async (slug) => {
+
+    
     try {
-      var config = {
-        method: 'get',
-        url: `${base_url}api/posts/${slug}`,
-        headers: {
-          'Authorization': `Token ${token}`,
-        }
-      };
-      const result = await axios(config);
-      console.log(result)
-      setTimeout(()=>{
-        setLoading(false)
-      },3000)
-      
-      setDetails(result.data);
-      console.log(details)
-      
+      const res = await axios.get(`${base_url}api/posts/${slug}`)
+     console.log(res)
+      // toastSuccessNotify('Posts fetched successfully.')
+      return res;
     } catch (error) {
-      console.log(error)
+      console.log(error);
+      // toastErrorNotify(error.message)
     }
   }
 
-  console.log(details)
+
 
  useEffect(() => {
 
-getOneBlog()
+  getPostDetails()
 
  }, [])
  
