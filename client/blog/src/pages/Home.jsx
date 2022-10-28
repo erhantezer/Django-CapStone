@@ -32,6 +32,7 @@ console.log(blogs);
 
   const navigate = useNavigate()
   const openDetails = (slug) => {
+  console.log(slug)
     if (!currentUser) {
       toastErrorNotify("Login for details of blog!");
     } else {
@@ -62,6 +63,9 @@ console.log(blogs);
                 />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
+                    {blog.category}
+                  </Typography>
+                  <Typography gutterBottom variant="h6" component="div">
                     {blog.title}
                   </Typography>
                   <Typography sx={{

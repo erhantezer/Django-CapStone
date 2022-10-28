@@ -102,7 +102,7 @@ class BlogPostSerializer(serializers.ModelSerializer):
         return Post_view.objects.filter(post=obj.id).count()
 
     def get_days(self,obj):
-        return (now() - obj.publishdate).days
+        return (now() - obj.published_date).days
 
 
 # ! Object-level validation  
