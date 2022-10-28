@@ -17,35 +17,42 @@ import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import { useNavigate } from "react-router-dom";
 import { toastErrorNotify } from '../helper/ToastNotify';
 
-const Home = () => {
-  const { currentUser } = useContext(AuthContext)
+const MyPosts = () => {
 
-  const { getBlogs, blogs, getCategory, page, setPage } = useContext(BlogContext)
+    const { currentUser } = useContext(AuthContext)
 
-  useEffect(() => {
-    getBlogs();
-    getCategory();
-  }, [page])
+    const { 
+        // blogs, 
+        getCategory, 
+        // categories, 
+        page, 
+        setPage, 
+        usersAllPosts, 
+        userPosts } = useContext(BlogContext)
 
-  const navigate = useNavigate()
-  const openDetails = (slug) => {
-    if (!currentUser) {
-      toastErrorNotify("Login for details of blog!");
-    } else {
-      navigate(`/details/${slug}`, { state: { slug } })
-    }
-  }
+    useEffect(() => {
+        getCategory();
+        usersAllPosts();
+      }, [page])
+
+      const navigate = useNavigate()
+      const openDetails = (slug) => {
+        if (!currentUser) {
+          toastErrorNotify("Login for details of blog!");
+        } else {
+          navigate(`/details/${slug}`, { state: { slug } })
+        }
+      }
   return (
     <Box>
       <Box style={{ margin: "2px auto" }}>
         <Box spacing={2}>
           <Box xs={12} md={6} lg={4} xl={3} sx={{ my:3, display:"flex", justifyContent:"center", gap:3, flexWrap:"wrap", mx: "auto" }}>
-            {blogs.map((blog) => (
+            {userPosts.map((blog) => (
               <Card sx={{ width: 345, height: 457, position: "relative" }}>
                 <CardHeader
                   avatar={
                     <Avatar alt="Emre Sharp" aria-label="blog" sx={{ bgcolor: red[500] }} />
-
                   }
                   title={blog.author}
                   subheader={blog.last_updated_date.slice(0, 10)}
@@ -113,4 +120,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default MyPosts
