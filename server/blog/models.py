@@ -34,7 +34,7 @@ class BlogPost(models.Model):
     published_date = models.DateTimeField(auto_now_add=True, blank=True)
     last_updated_date = models.DateTimeField(auto_now=True, blank=True)
     status = models.CharField(max_length=2, choices=STATUS)
-    slug = models.SlugField(blank=True, null=True)
+    slug = models.SlugField(blank=True, unique=True)
 
     def __str__(self):
         return self.title  #! obje diye değil title ismiyle görüntüleyelim adminde
@@ -64,5 +64,6 @@ class Post_view(models.Model):
     user = models.ForeignKey(User, related_name="post_viewed_user", on_delete=models.PROTECT)
     post = models.ForeignKey(BlogPost, related_name="viewed_post", on_delete=models.CASCADE)
     viewed_date_time = models.DateTimeField(auto_now_add=True, blank=True)
-    
+    def __str__(self):
+        return f"{self.user} viewed at {self.viewed_date_time}"
     

@@ -45,7 +45,7 @@ class LikeSerializer(serializers.ModelSerializer):
 
 #! BlogPost serializer da comment ve like işlemleri için model de tanımladığımız isimde değişkeni yazıp üstte tanımladığımız commentserializer
 #! ve like serializeri ekledik ardından foreign key ile bağlı olan verilerin string olarak almak için category ve author stringrelatedfield yazarız
-#!  ardından bunların author_id ve category_id lerini eklemek gerekir. 
+#! ardından bunların author_id ve category_id lerini eklemek gerekir. 
 #! Tanımladığımız methodfieldleri like_count,days,comment_count,post_view_count ekleriz BlogPost modelinde yazdığımız ve serializerde yazdığımız
 #! bütün fields ekleriz
 class BlogPostSerializer(serializers.ModelSerializer):
@@ -54,7 +54,6 @@ class BlogPostSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField()
     author_id = serializers.IntegerField()
     like_count = serializers.SerializerMethodField()
-    days = serializers.SerializerMethodField()
     comment_count = serializers.SerializerMethodField()
     post_view_count = serializers.SerializerMethodField()
     category = serializers.StringRelatedField()
@@ -72,7 +71,6 @@ class BlogPostSerializer(serializers.ModelSerializer):
             "image",
             "published_date",
             "last_updated_date",
-            "days",
             "status",
             "slug",
             "like_count",
@@ -86,10 +84,7 @@ class BlogPostSerializer(serializers.ModelSerializer):
         read_only_fields = (
             "published_date",
             "updated_date",
-            "days",
             "slug",
-            "author",
-            "author_id"
         )
 
     def get_like_count(self, obj):
@@ -101,8 +96,7 @@ class BlogPostSerializer(serializers.ModelSerializer):
     def get_post_view_count(self, obj):
         return Post_view.objects.filter(post=obj.id).count()
 
-    def get_days(self,obj):
-        return (now() - obj.publishdate).days
+   
 
 
 # ! Object-level validation  

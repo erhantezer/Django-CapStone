@@ -14,7 +14,7 @@ import Login from '../pages/Login'
 import MyPosts from '../pages/MyPosts'
 import NewBlog from '../pages/NewBlog'
 import PostDetails from '../pages/PostDetails'
-import Profile from '../pages/Profile'
+// import Profile from '../pages/Profile'
 import Register from '../pages/Register'
 import UpdateBlog from '../pages/UpdateBlog'
 
@@ -36,9 +36,9 @@ const AppRouter = () => {
           <Route path="" element={<NewBlog />} />
         </Route> 
 
-        <Route path="/profile" element={<PrivateRouter />}>
+        {/* <Route path="/profile" element={<PrivateRouter />}>
           <Route path="" element={<Profile />} />
-        </Route>
+        </Route> */}
 
         <Route path="/register" element={<Register />}></Route>
 
