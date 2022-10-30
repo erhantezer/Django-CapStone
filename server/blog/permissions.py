@@ -1,12 +1,11 @@
  ###########! PERMISSONS ##############
- 
 from rest_framework import permissions
 
 #class BasePermission(metaclass=BasePermissionMetaclass):
     # """
     # A base class from which all permission classes should inherit.
     # """
-
+    
     #def has_permission(self, request, view):
         # """
         # Return `True` if permission is granted, `False` otherwise.
