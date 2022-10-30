@@ -86,6 +86,7 @@ const logout =async(navigate) =>{
       console.log(err)
     }
   }
+  
 let values = {
     createUser,
     currentUser,
