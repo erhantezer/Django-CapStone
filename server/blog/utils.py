@@ -8,6 +8,5 @@ import uuid
 def get_random_code(): #! fonksiyon adı verdik rastgele verebiliriz
     code = str(uuid.uuid4())[:11].replace("-","")
     return code
-
 #! Burada evrensel benzersiz kimlik tanımlayıcı yı import ettik yani çağırdık ardından kendine ait method la
 #! bu işlemi code değişkenine atıp döndürdük istenilen yerde çağırılacak vaziyete getirdik
