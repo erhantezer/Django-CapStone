@@ -97,8 +97,6 @@ class BlogPostSerializer(serializers.ModelSerializer):
         return Post_view.objects.filter(post=obj.id).count()
 
    
-
-
 # ! Object-level validation  
 
 #   """
