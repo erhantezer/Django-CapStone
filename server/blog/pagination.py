@@ -1,6 +1,5 @@
 from rest_framework.pagination import CursorPagination, LimitOffsetPagination
 
-
 # class CursorPagination(BasePagination):
 #     cursor_query_param = 'cursor'
 #     cursor_query_description = _('The pagination cursor value.')
