@@ -48,7 +48,6 @@ class BlogPostDetailView(generics.RetrieveUpdateDestroyAPIView):
         return Response(serializer.data)
 
 
-
 class CommentView(generics.CreateAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
