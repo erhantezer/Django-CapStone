@@ -44,7 +44,7 @@ class BlogPostDetailView(generics.RetrieveUpdateDestroyAPIView):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
         # Post_view.objects.get_or_create(user=request.user, post=instance)
-        # Post_view.objects.create(user=request.user, post=instance)
+        Post_view.objects.create(user=request.user, post=instance)
         return Response(serializer.data)
 
 
