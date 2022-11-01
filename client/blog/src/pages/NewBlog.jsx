@@ -90,6 +90,7 @@ const NewBlog = () => {
                       defaultValue=""
                       label="Categories"
                       required
+                      value={newBlog.category_id}
                       onChange={(e) => setNewBlog({ ...newBlog, "category_id": e.target.value })}
                     >
                       <MenuItem value="">
@@ -129,6 +130,7 @@ const NewBlog = () => {
                       defaultValue=""
                       label="Status"
                       required
+                      value={newBlog.status}
                       onChange={(e) => setNewBlog({ ...newBlog, "status": e.target.value })}
                     >
                       <MenuItem value="">

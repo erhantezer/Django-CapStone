@@ -29,7 +29,7 @@ const createUser = async(email, password, firstName, lastName, userName, navigat
         "last_name":lastName,
         "email":email,
         "password":password,
-        "password1":password,
+        "password1":password
     })
     console.log(response)
     if(response.data.token){

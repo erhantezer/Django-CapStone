@@ -17,7 +17,7 @@ const BlogContextProvider = (props) => {
 
   const [userPosts, setUserPosts] = useState([]);
 
-  const base_url = "https://127.0.0.1:8000/"
+  const base_url = "http://127.0.0.1:8000/"
 
   const getBlogs = async () => {
 
@@ -32,7 +32,7 @@ const BlogContextProvider = (props) => {
     }
   }
   async function getOneBlog(slug) {
-    const token = window.atob(sessionStorage.getItem('token'));
+    const token = sessionStorage.getItem('token');
 
     try {
       var config = {
@@ -51,7 +51,7 @@ const BlogContextProvider = (props) => {
   }
 
   const setComments = async (slug, commendData) => {
-    const token = window.atob(sessionStorage.getItem('token'));
+    const token = sessionStorage.getItem('token');
     const commentUrl = base_url + `api/posts/${slug}/add_comment/`;
     try {
       const data = {
@@ -89,7 +89,7 @@ const BlogContextProvider = (props) => {
 
   const createPost = async (data, navigate) => {
 
-    const token = window.atob(sessionStorage.getItem('token'));
+    const token = sessionStorage.getItem('token');
 
     var config = {
       method: 'post',
@@ -114,7 +114,7 @@ const BlogContextProvider = (props) => {
 
   const updatePost = async (data, navigate, slug) => {
 
-    const token = window.atob(sessionStorage.getItem('token'));
+    const token = sessionStorage.getItem('token');
 
     var config = {
       method: 'put',
@@ -139,7 +139,7 @@ const BlogContextProvider = (props) => {
 
   const deletePost = async (navigate, slug) => {
 
-    const token = window.atob(sessionStorage.getItem('token'));
+    const token = sessionStorage.getItem('token');
 
     var config = {
       method: 'delete',
@@ -163,7 +163,7 @@ const BlogContextProvider = (props) => {
   }
 
   const usersAllPosts = async () => {
-    const token = window.atob(sessionStorage.getItem('token'));
+    const token = sessionStorage.getItem('token');
     const config = {
       method: 'get',
       url: `${base_url}api/all-posts/`,

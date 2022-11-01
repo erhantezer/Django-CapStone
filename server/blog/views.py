@@ -2,8 +2,8 @@ from rest_framework import permissions
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import get_object_or_404
 from rest_framework import  generics, status
-from blog.pagination import CustomLimitOffsetPagination
-from blog.permissions import IsAdminUserOrReadOnly, IsPostOwnerOrReadOnly
+# from blog.pagination import CustomLimitOffsetPagination
+# from blog.permissions import IsAdminUserOrReadOnly, IsPostOwnerOrReadOnly
 from blog.serializers import BlogPostSerializer, CategorySerializer, CommentSerializer,LikeSerializer
 from rest_framework.response import Response
 from blog.models import BlogPost, Category, Post_view, Comment, Like
@@ -12,22 +12,33 @@ from blog.models import BlogPost, Category, Post_view, Comment, Like
 class CategoryView(generics.ListCreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    permission_classes = [IsAdminUserOrReadOnly]
+    # permission_classes = [IsAdminUserOrReadOnly]
 
 
 class BlogPostView(generics.ListCreateAPIView):
-    queryset = BlogPost.objects.filter(status="p")
+    queryset = BlogPost.objects.all()
     serializer_class = BlogPostSerializer
-    pagination_class = CustomLimitOffsetPagination
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    # # pagination_class = CustomLimitOffsetPagination
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer["author"]=request.user
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     def perform_create(self, serializer):
-        serializer.save(author=self.request.user)
+        serializer.save()
+    # def perform_create(self, serializer):
+    #     serializer.save(author=self.request.user)
 
 class UserAllPosts(generics.ListAPIView):
     queryset = BlogPost.objects.all()
     serializer_class = BlogPostSerializer
-    permission_classes = [IsPostOwnerOrReadOnly]
+    # permission_classes = [IsPostOwnerOrReadOnly]
 
     def get_queryset(self):
         author = self.request.user
@@ -38,7 +49,7 @@ class BlogPostDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = BlogPost.objects.all()
     serializer_class = BlogPostSerializer
     lookup_field = "slug"
-    permission_classes = [IsPostOwnerOrReadOnly]
+    # permission_classes = [IsPostOwnerOrReadOnly]
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
